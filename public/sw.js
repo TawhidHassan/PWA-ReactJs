@@ -19,15 +19,14 @@ this.addEventListener("install",(event)=>{
 })
 
 this.addEventListener("fetch", (event) => {
-
-    console.warn("url",event.request.url)
+    // console.warn("url",event.request.url)
+    if (!navigator.onLine) {
         event.respondWith(
             caches.match(event.request).then((resp) => {
                 if (resp) {
                     return resp
                 }
-               
             })
         )
-    
+    }
 }) 
