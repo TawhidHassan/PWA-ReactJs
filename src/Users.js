@@ -1,25 +1,35 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Table } from 'react-bootstrap'
-export default function Users()
-{
-    const [data,setData]=useState([])
-    useEffect(()=>{
-        let url="https://jsonplaceholder.typicode.com/users";
-        fetch(url).then((response)=>{
+export default function Users() {
+    const [data, setData] = useState([])
+    const [mode, setMode] = useState('online');
+    useEffect(() => {
+        let url = "https://jsonplaceholder.typicode.com/users";
+        fetch(url).then((response) => {
             response.json().then((result) => {
                 console.warn(result)
                 setData(result)
-                // localStorage.setItem("users", JSON.stringify(result))
+                localStorage.setItem("users", JSON.stringify(result))
             })
         }).catch(err => {
-            // setMode('offline')
-            // let collection = localStorage.getItem('users');
-            // setData(JSON.parse(collection))
+            setMode('offline')
+            let collection = localStorage.getItem('users');
+            setData(JSON.parse(collection))
         })
-    })
-    return(
+    }, [])
+    return (
         <div>
-             <Table striped bordered hover>
+            <div>
+                {
+                    mode === 'offline' ?
+                        <div class="alert alert-warning" role="alert">
+                            you are in offline mode or some issue with connection
+                        </div>
+                        : null
+
+                }
+            </div>
+            <Table striped bordered hover>
                 <thead>
                     <tr>
                         <th>Id</th>
