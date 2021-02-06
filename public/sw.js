@@ -20,6 +20,7 @@ this.addEventListener("install",(event)=>{
 })
 
 this.addEventListener("fetch", (event) => {
+
     // console.warn("url",event.request.url)
     if (!navigator.onLine) {
         event.respondWith(
